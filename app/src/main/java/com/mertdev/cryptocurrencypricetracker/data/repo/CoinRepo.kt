@@ -14,7 +14,8 @@ class CoinRepo @Inject constructor(private val coinPagingSource: CoinPagingSourc
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
+                enablePlaceholders = false,
+                prefetchDistance = 1
             ),
             pagingSourceFactory = {coinPagingSource}
         ).flow
