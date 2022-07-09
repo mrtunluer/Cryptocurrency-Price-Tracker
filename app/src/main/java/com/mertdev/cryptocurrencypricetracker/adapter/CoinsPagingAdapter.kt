@@ -1,7 +1,6 @@
 package com.mertdev.cryptocurrencypricetracker.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -36,7 +35,13 @@ class CoinsPagingAdapter: PagingDataAdapter<CoinItem, CoinsPagingAdapter.ViewHol
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val coin = getItem(position) ?: return
-        holder.binding.text.text = coin.name
+
+        val name = coin.name
+        val symbol = coin.symbol?.uppercase()
+        val price = coin.currentPrice.toString()
+
+        holder.binding.coinText.text = name.plus(" $symbol")
+        holder.binding.priceTxt.text = price
     }
 
     inner class ViewHolder(val binding: CoinsItemBinding):
