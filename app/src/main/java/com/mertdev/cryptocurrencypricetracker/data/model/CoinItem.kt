@@ -15,3 +15,4 @@ data class CoinItem(
     @SerializedName("symbol")
     val symbol: String?
 )
+
