@@ -3,15 +3,19 @@ package com.mertdev.cryptocurrencypricetracker.ui.view
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.adapter.CoinsPagingAdapter
+import com.mertdev.cryptocurrencypricetracker.adapter.FooterAdapter
+import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentHomeBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -25,21 +29,39 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         initRv()
-        a()
+        observeCoin()
+        loadStateListener()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getCoins()
+        }
+
+    }
+
+    private fun loadStateListener(){
+        coinsPagingAdapter.addLoadStateListener { combinedLoadStates ->
+            binding.swipeRefreshLayout.isRefreshing = combinedLoadStates.source.refresh is LoadState.Loading
+            binding.errorTxt.isVisible = combinedLoadStates.source.refresh is LoadState.Error
+        }
     }
 
     private fun initRv(){
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            adapter = coinsPagingAdapter
+            adapter = coinsPagingAdapter.withLoadStateFooter(FooterAdapter{
+                coinsPagingAdapter.retry() })
         }
     }
 
-    private fun a(){
-        lifecycleScope.launch {
-            viewModel.getCoins().collectLatest {
-                coinsPagingAdapter.submitData(it)
-            }
+    private fun submitData(pagingData: PagingData<CoinItem>){
+        lifecycleScope.launch{
+            coinsPagingAdapter.submitData(pagingData)
+        }
+    }
+
+    private fun observeCoin(){
+        viewModel.coinLiveData.observe(viewLifecycleOwner){ coinItem ->
+            coinItem?.let { submitData(coinItem) }
         }
     }
 
