@@ -79,11 +79,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun filter(text: Editable?){
         val filteredList = arrayListOf<CoinItem>()
         for(item in coinsPagingAdapter.snapshot().toMutableList()){
-            item?.name?.let {
-                if (it.lowercase().contains(text.toString().lowercase())){
-                    filteredList.add(item)
+
+            item?.let { coinItem ->
+                if (coinItem.name != null && coinItem.symbol != null){
+                    if (coinItem.name.lowercase().contains(text.toString().lowercase())){
+                        filteredList.add(item)
+                    }else if (coinItem.symbol.lowercase().contains(text.toString().lowercase())){
+                        filteredList.add(item)
+                    }
                 }
             }
+
         }
         searchAdapter.submitList(filteredList)
         isResultExist(filteredList.size)
