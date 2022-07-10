@@ -6,9 +6,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getCoins()
+        }
+
+        coinsPagingAdapter.setOnItemClickListener {
+            val bundle = bundleOf("id" to it.id)
+            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
+        }
+
+        searchAdapter.setOnItemClickListener {
+            val bundle = bundleOf("id" to it.id)
+            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
         }
 
     }
