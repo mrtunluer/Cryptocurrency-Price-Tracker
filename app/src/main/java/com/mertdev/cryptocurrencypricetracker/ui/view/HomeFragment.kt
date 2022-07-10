@@ -1,5 +1,6 @@
 package com.mertdev.cryptocurrencypricetracker.ui.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -56,7 +57,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             override fun afterTextChanged(s: Editable?) {
                 if (s == null || s.isEmpty()){
                     showPagingRv()
-                }else if (s.toString().length >= 3){
+                }else if (s.toString().length >= 2){
                     showSearchRv()
                     filter(s)
                 }
@@ -79,7 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val filteredList = arrayListOf<CoinItem>()
         for(item in coinsPagingAdapter.snapshot().toMutableList()){
             item?.name?.let {
-                if (it.contains(text.toString().lowercase())){
+                if (it.lowercase().contains(text.toString().lowercase())){
                     filteredList.add(item)
                 }
             }
@@ -104,6 +105,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initRv(){
+        binding.swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
+        binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK)
+
         binding.pagingRv.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             adapter = coinsPagingAdapter.withLoadStateFooter(FooterAdapter{
