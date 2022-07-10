@@ -8,8 +8,6 @@ data class CoinItem(
     val id: String?,
     @SerializedName("current_price")
     val currentPrice: Double?,
-    @SerializedName("image")
-    val image: String?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("symbol")
