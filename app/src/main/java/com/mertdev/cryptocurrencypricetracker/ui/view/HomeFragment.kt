@@ -1,6 +1,8 @@
 package com.mertdev.cryptocurrencypricetracker.ui.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.adapter.CoinsPagingAdapter
 import com.mertdev.cryptocurrencypricetracker.adapter.FooterAdapter
+import com.mertdev.cryptocurrencypricetracker.adapter.SearchAdapter
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentHomeBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.HomeFragmentViewModel
@@ -24,6 +27,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeFragmentViewModel by viewModels()
     private val coinsPagingAdapter = CoinsPagingAdapter()
+    private val searchAdapter = SearchAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,11 +35,65 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         initRv()
         observeCoin()
         loadStateListener()
+        search()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getCoins()
         }
 
+    }
+
+    private fun search(){
+        binding.searchTxt.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do Nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Do Nothing
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s == null || s.isEmpty()){
+                    showPagingRv()
+                }else if (s.toString().length >= 3){
+                    showSearchRv()
+                    filter(s)
+                }
+            }
+
+        })
+    }
+
+    private fun showSearchRv(){
+        binding.searchRv.visibility = View.VISIBLE
+        binding.pagingRv.visibility = View.GONE
+    }
+
+    private fun showPagingRv(){
+        binding.searchRv.visibility = View.GONE
+        binding.pagingRv.visibility = View.VISIBLE
+    }
+
+    private fun filter(text: Editable?){
+        val filteredList = arrayListOf<CoinItem>()
+        for(item in coinsPagingAdapter.snapshot().toMutableList()){
+            item?.name?.let {
+                if (it.contains(text.toString().lowercase())){
+                    filteredList.add(item)
+                }
+            }
+        }
+        searchAdapter.submitList(filteredList)
+        isResultExist(filteredList.size)
+    }
+
+    private fun isResultExist(size: Int){
+        if (size == 0){
+            binding.noResultTxt.visibility = View.VISIBLE
+        }else{
+            binding.noResultTxt.visibility = View.GONE
+        }
     }
 
     private fun loadStateListener(){
@@ -46,10 +104,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initRv(){
-        binding.recyclerView.apply {
+        binding.pagingRv.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             adapter = coinsPagingAdapter.withLoadStateFooter(FooterAdapter{
                 coinsPagingAdapter.retry() })
+        }
+
+        binding.searchRv.apply {
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            adapter = searchAdapter
         }
     }
 
