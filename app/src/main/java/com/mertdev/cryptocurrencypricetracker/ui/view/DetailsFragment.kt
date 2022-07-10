@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentDetailsBinding
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentHomeBinding
@@ -22,6 +23,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailsBinding.bind(view)
+
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
     }
 
 }
