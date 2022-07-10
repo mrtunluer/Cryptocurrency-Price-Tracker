@@ -50,6 +50,13 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
         holder.binding.coinText.text = name.plus(" $symbol")
         holder.binding.priceTxt.text = price
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let {
+                it(coin)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {

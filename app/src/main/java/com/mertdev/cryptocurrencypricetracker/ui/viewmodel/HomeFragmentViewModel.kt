@@ -1,11 +1,10 @@
 package com.mertdev.cryptocurrencypricetracker.ui.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
+import androidx.paging.cachedIn
 import com.mertdev.cryptocurrencypricetracker.data.repo.CoinRepo
+import com.mertdev.cryptocurrencypricetracker.utils.CoinListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,9 +15,8 @@ class HomeFragmentViewModel @Inject constructor(
     private val coinRepo: CoinRepo
 ) : ViewModel(){
 
-    val coinLiveData: MutableLiveData<PagingData<CoinItem>> by lazy {
-        MutableLiveData<PagingData<CoinItem>>()
-    }
+    private val _state = MutableStateFlow(CoinListState())
+    val state: StateFlow<CoinListState> get() = _state
 
     init {
         getCoins()
@@ -26,8 +24,8 @@ class HomeFragmentViewModel @Inject constructor(
 
     fun getCoins() {
         viewModelScope.launch {
-            coinRepo.getCoins().distinctUntilChanged().collectLatest {
-                coinLiveData.value = it
+            coinRepo.getCoins().cachedIn(viewModelScope).distinctUntilChanged().collectLatest {
+                _state.value = CoinListState(it)
             }
         }
     }

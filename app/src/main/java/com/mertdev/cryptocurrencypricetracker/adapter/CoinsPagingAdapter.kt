@@ -42,6 +42,13 @@ class CoinsPagingAdapter: PagingDataAdapter<CoinItem, CoinsPagingAdapter.ViewHol
 
         holder.binding.coinText.text = name.plus(" $symbol")
         holder.binding.priceTxt.text = price
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let {
+                it(coin)
+            }
+        }
+
     }
 
     inner class ViewHolder(val binding: CoinsItemBinding):

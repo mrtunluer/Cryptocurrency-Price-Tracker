@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.os.bundleOf
@@ -22,6 +23,7 @@ import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentHomeBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -36,7 +38,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         initRv()
-        observeCoin()
+        lifecycleScope.launch {
+            collectCoin()
+        }
         loadStateListener()
         search()
 
@@ -45,6 +49,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         coinsPagingAdapter.setOnItemClickListener {
+            Log.i("bkajsd","dşhlkas")
             val bundle = bundleOf("id" to it.id)
             findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
         }
@@ -144,9 +149,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun observeCoin(){
-        viewModel.coinLiveData.observe(viewLifecycleOwner){ coinItem ->
-            coinItem?.let { submitData(coinItem) }
+    private suspend fun collectCoin(){
+        viewModel.state.collectLatest { coinItem ->
+            coinItem.coinListData?.let { submitData(it) }
         }
     }
 
