@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.os.bundleOf
@@ -49,7 +48,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         coinsPagingAdapter.setOnItemClickListener {
-            Log.i("bkajsd","dşhlkas")
             val bundle = bundleOf("id" to it.id)
             findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
         }

@@ -24,7 +24,7 @@ class HomeFragmentViewModel @Inject constructor(
 
     fun getCoins() {
         viewModelScope.launch {
-            coinRepo.getCoins().cachedIn(viewModelScope).distinctUntilChanged().collectLatest {
+            coinRepo.getCoins().cachedIn(viewModelScope).collectLatest {
                 _state.value = CoinListState(it)
             }
         }
