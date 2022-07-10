@@ -1,15 +1,16 @@
 package com.mertdev.cryptocurrencypricetracker.data.repo
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import com.mertdev.cryptocurrencypricetracker.data.datasource.CoinPagingSource
-import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
+import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
 import com.mertdev.cryptocurrencypricetracker.service.ApiService
-import com.mertdev.cryptocurrencypricetracker.utils.Constants
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CoinDetailsRepo @Inject constructor(private val apiService: ApiService) {
-
+    fun getCoinDetails(id: String): Flow<CoinDetails>
+    = flow {
+        emit(apiService.getCoinDetails(id))
+    }.flowOn(Dispatchers.IO)
 }

@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.service.ApiService
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.NETWORK_PAGE_SIZE
-import com.mertdev.cryptocurrencypricetracker.utils.Constants.SPARKLINE
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.VS_CURRENCY
 import retrofit2.HttpException
 import java.io.IOException
@@ -29,7 +28,6 @@ class CoinPagingSource @Inject constructor(
         return try {
             val coinItem = apiService.getCoins(
                 VS_CURRENCY,
-                SPARKLINE,
                 pageIndex
             )
             val nextKey =
