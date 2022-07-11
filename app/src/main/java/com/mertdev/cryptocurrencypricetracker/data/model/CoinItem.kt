@@ -11,6 +11,8 @@ data class CoinItem(
     @SerializedName("name")
     val name: String?,
     @SerializedName("symbol")
-    val symbol: String?
+    val symbol: String?,
+    @SerializedName("image")
+    val image: String?
 )
 

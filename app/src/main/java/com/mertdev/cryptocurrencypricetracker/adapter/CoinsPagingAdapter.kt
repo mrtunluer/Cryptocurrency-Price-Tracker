@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.CoinsItemBinding
+import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 
 class CoinsPagingAdapter: PagingDataAdapter<CoinItem, CoinsPagingAdapter.ViewHolder>(Companion) {
 
@@ -39,7 +40,9 @@ class CoinsPagingAdapter: PagingDataAdapter<CoinItem, CoinsPagingAdapter.ViewHol
         val name = coin.name
         val symbol = coin.symbol?.uppercase()
         val price = coin.currentPrice.toString()
+        val imageUrl = coin.image.toString()
 
+        holder.binding.coinImg.loadImageFromUrl(imageUrl)
         holder.binding.coinText.text = name.plus(" $symbol")
         holder.binding.priceTxt.text = price
 
