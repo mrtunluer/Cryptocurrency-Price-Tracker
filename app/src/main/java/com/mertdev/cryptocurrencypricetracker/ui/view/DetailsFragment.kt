@@ -54,9 +54,19 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.titleTxt.text = details.name.plus(" "+details.symbol?.uppercase())
         details.hashingAlgorithm?.let { binding.hashingAlg.text = it }
         binding.describeTxt.text = details.description.toString()
-        binding.currentPriceTxt.text = details.marketData?.currentPrice?.usd.toString()
+
+        details.marketData?.currentPrice?.usd?.let {
+            binding.currentPriceTitleTxt.visibility = View.VISIBLE
+            binding.currentPriceTxt.visibility = View.VISIBLE
+            binding.currentPriceTxt.text = it.toString()
+        }
+
+        details.marketData?.priceChangePercentage24h?.let {
+            binding.percentTitleTxt.visibility = View.VISIBLE
+            binding.percentTxt.visibility = View.VISIBLE
+            binding.percentTxt.text = it.toString()
+        }
         details.image?.large?.let { binding.coinImg.loadImageFromUrl(it) }
-        binding.percentTxt.text = details.marketData?.priceChangePercentage24h?.toString()
     }
 
     private fun isFailure(){
