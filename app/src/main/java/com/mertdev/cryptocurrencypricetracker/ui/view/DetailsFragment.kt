@@ -42,8 +42,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 when (uiState){
                     is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
                     is DataStatus.Empty -> isEmpty()
-                    is DataStatus.Failure -> isFailure()
-                    is DataStatus.Success -> isSuccess(uiState.data)
+                    is DataStatus.Error -> isFailure()
+                    is DataStatus.Success -> uiState.data?.let { isSuccess(it) }
                 }
             }
         }
