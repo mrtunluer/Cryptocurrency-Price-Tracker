@@ -27,7 +27,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         collectDetailsData()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            collectDetailsData()
+            viewModel.getCoinDetails()
         }
 
         binding.backBtn.setOnClickListener {
