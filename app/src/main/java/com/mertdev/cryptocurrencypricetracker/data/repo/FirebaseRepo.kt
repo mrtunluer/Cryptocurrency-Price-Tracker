@@ -22,4 +22,31 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
             .document(uid)
             .set(user)
 
+    fun getFavorite(coinId: String) =
+        firebaseUser?.let {
+            firebaseFirestore.collection("Users")
+                .document(it.uid)
+                .collection("Favorite")
+                .document(coinId)
+                .get()
+        }
+
+    fun addFavorite(coinId: String) =
+        firebaseUser?.let {
+            firebaseFirestore.collection("Users")
+                .document(it.uid)
+                .collection("Favorite")
+                .document(coinId)
+                .set("")
+        }
+
+    fun deleteFavorite(coinId: String) =
+        firebaseUser?.let {
+            firebaseFirestore.collection("Users")
+                .document(it.uid)
+                .collection("Favorite")
+                .document(coinId)
+                .delete()
+        }
+
 }
