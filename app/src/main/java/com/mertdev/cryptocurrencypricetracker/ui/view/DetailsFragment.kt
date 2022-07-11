@@ -38,7 +38,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun collectDetailsData(){
         lifecycleScope.launchWhenStarted {
-            viewModel.state.collect{ uiState ->
+            viewModel.detailState.collect{ uiState ->
                 when (uiState){
                     is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
                     is DataStatus.Empty -> isEmpty()

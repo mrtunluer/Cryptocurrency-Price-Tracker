@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertdev.cryptocurrencypricetracker.data.repo.CoinDetailsRepo
+import com.mertdev.cryptocurrencypricetracker.data.repo.FirebaseRepo
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,11 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsFragmentViewModel @Inject constructor(
     private val coinDetailsRepo: CoinDetailsRepo,
+    private val firebaseRepo: FirebaseRepo,
     savedStateHandle: SavedStateHandle
     ) : ViewModel(){
 
-    private val _state = MutableStateFlow<DataStatus>(DataStatus.Empty)
-    val state: StateFlow<DataStatus> get() = _state
+    private val _detailState = MutableStateFlow<DataStatus>(DataStatus.Empty)
+    val detailState: StateFlow<DataStatus> get() = _detailState
 
     private val coinId = savedStateHandle.get<String>("id")
 
@@ -30,12 +32,12 @@ class DetailsFragmentViewModel @Inject constructor(
     fun getCoinDetails(){
         viewModelScope.launch {
             coinId?.let {
-                _state.value = DataStatus.Loading
+                _detailState.value = DataStatus.Loading
                 coinDetailsRepo.getCoinDetails(it)
                     .catch {
-                        _state.value =  DataStatus.Failure
+                        _detailState.value =  DataStatus.Failure
                     }.collect{ data ->
-                        _state.value = DataStatus.Success(data)
+                        _detailState.value = DataStatus.Success(data)
                     }
             }
         }
