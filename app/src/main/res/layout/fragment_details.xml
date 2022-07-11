@@ -40,7 +40,128 @@
         </androidx.appcompat.widget.Toolbar>
 
 
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Bitcoin BTC"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 
+        <ImageView
+            android:id="@+id/coinImg"
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/bitcoin"
+            app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
+            app:layout_constraintStart_toEndOf="@+id/titleTxt"
+            app:layout_constraintTop_toTopOf="@+id/titleTxt" />
+
+        <TextView
+            android:id="@+id/describeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Bitcoin is the first successful internet money based on peer-to-peer technology; whereby no central bank or authority is involved in the transaction and production of the Bitcoin currency. It was created by an anonymous individual/group under the name, Satoshi Nakamoto. The source code is available publicly as an open source project, anybody can look at it and be part of the developmental process."
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTxt" />
+
+
+        <TextView
+            android:id="@+id/hashingAlg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="SHA-256"
+            android:textColor="@color/teal_200"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
+            app:layout_constraintStart_toEndOf="@+id/coinImg"
+            app:layout_constraintTop_toTopOf="@+id/titleTxt" />
+
+        <ImageView
+            android:id="@+id/saveImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_bookmark_border_24"
+            android:textColor="@color/teal_200"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
+            app:layout_constraintStart_toEndOf="@+id/hashingAlg"
+            app:layout_constraintTop_toTopOf="@+id/titleTxt" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Current Price "
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/describeTxt" />
+
+        <TextView
+            android:id="@+id/currentPriceTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="24356"
+            android:textColor="@color/teal_200"
+            android:gravity="center"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:drawableEndCompat="@drawable/ic_baseline_attach_money_24" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:text="Price change percentage over the last 24 hours "
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentPriceTxt" />
+
+
+        <TextView
+            android:id="@+id/percentTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="-4.215"
+            android:textColor="@color/teal_200"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_baseline_percent_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
