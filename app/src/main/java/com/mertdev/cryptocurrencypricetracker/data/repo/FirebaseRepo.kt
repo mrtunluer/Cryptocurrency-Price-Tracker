@@ -6,10 +6,10 @@ import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 class FirebaseRepo @Inject constructor(firebase: Firebase) {
+
     val firebaseAuth = firebase.auth
     val firebaseUser = firebaseAuth.currentUser
     private val firebaseFirestore = firebase.firestore
-
 
     fun signUpUser(email: String, password: String) =
         firebaseAuth.createUserWithEmailAndPassword(email,password)
