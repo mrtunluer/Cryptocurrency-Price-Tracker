@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mertdev.cryptocurrencypricetracker.data.repo.CoinDetailsRepo
-import com.mertdev.cryptocurrencypricetracker.utils.DetailState
+import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,8 +18,8 @@ class DetailsFragmentViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
     ) : ViewModel(){
 
-    private val _state = MutableStateFlow<DetailState>(DetailState.Empty)
-    val state: StateFlow<DetailState> get() = _state
+    private val _state = MutableStateFlow<DataStatus>(DataStatus.Empty)
+    val state: StateFlow<DataStatus> get() = _state
 
     private val coinId = savedStateHandle.get<String>("id")
 
@@ -30,12 +30,12 @@ class DetailsFragmentViewModel @Inject constructor(
     fun getCoinDetails(){
         viewModelScope.launch {
             coinId?.let {
-                _state.value = DetailState.Loading
+                _state.value = DataStatus.Loading
                 coinDetailsRepo.getCoinDetails(it)
-                    .catch { error ->
-                        _state.value =  DetailState.Failure(error)
+                    .catch {
+                        _state.value =  DataStatus.Failure
                     }.collect{ data ->
-                        _state.value = DetailState.Success(data)
+                        _state.value = DataStatus.Success(data)
                     }
             }
         }

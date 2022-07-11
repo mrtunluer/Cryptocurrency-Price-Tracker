@@ -10,7 +10,7 @@ import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentDetailsBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.DetailsFragmentViewModel
-import com.mertdev.cryptocurrencypricetracker.utils.DetailState
+import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,10 +40,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         lifecycleScope.launchWhenStarted {
             viewModel.state.collect{ uiState ->
                 when (uiState){
-                    is DetailState.Loading -> binding.swipeRefreshLayout.isRefreshing = true
-                    is DetailState.Empty -> isEmpty()
-                    is DetailState.Failure -> isFailure()
-                    is DetailState.Success -> isSuccess(uiState.data)
+                    is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+                    is DataStatus.Empty -> isEmpty()
+                    is DataStatus.Failure -> isFailure()
+                    is DataStatus.Success -> isSuccess(uiState.data)
                 }
             }
         }
