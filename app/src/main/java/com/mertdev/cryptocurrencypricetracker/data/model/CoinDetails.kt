@@ -15,12 +15,21 @@ data class CoinDetails(
     @SerializedName("symbol")
     val symbol: String?,
     @SerializedName("market_data")
-    val marketData: MarketData?
+    val marketData: MarketData?,
+    @SerializedName("image")
+    val image: Image?
+)
+
+data class Image(
+    @SerializedName("large")
+    val large: String?
 )
 
 data class MarketData(
     @SerializedName("current_price")
-    val currentPrice: CurrentPrice?
+    val currentPrice: CurrentPrice?,
+    @SerializedName("price_change_percentage_24h")
+    val priceChangePercentage24h: Double?
 )
 
 data class CurrentPrice(
