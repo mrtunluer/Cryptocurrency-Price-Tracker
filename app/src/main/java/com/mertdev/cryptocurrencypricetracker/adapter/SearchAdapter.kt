@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.CoinsItemBinding
+import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 
 class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
@@ -47,7 +48,9 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
         val name = coin.name
         val symbol = coin.symbol?.uppercase()
         val price = coin.currentPrice.toString()
+        val imageUrl = coin.image.toString()
 
+        holder.binding.coinImg.loadImageFromUrl(imageUrl)
         holder.binding.coinText.text = name.plus(" $symbol")
         holder.binding.priceTxt.text = price
 
