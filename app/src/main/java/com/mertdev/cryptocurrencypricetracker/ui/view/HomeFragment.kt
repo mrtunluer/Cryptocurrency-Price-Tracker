@@ -37,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         initRv()
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             collectCoin()
         }
         loadStateListener()
