@@ -50,71 +50,91 @@
 
                 </androidx.appcompat.widget.Toolbar>
 
-                <TextView
-                    android:id="@+id/titleTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 
-                <ImageView
-                    android:id="@+id/coinImg"
-                    android:layout_width="24sp"
-                    android:layout_height="24sp"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
-                    app:layout_constraintStart_toEndOf="@+id/titleTxt"
-                    app:layout_constraintTop_toTopOf="@+id/titleTxt" />
+                <LinearLayout
+                    android:id="@+id/horizontal"
+                    android:weightSum="1"
+                    android:layout_marginEnd="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolBar">
+
+
+                    <TextView
+                        android:id="@+id/titleTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/coinImg"
+                        android:layout_width="24sp"
+                        android:layout_height="24sp"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:id="@+id/hashingAlg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/teal_200"
+                        android:textSize="16sp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginStart="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/saveImg"
+                            app:layout_constraintEnd_toEndOf="@+id/saveImg"
+                            app:layout_constraintStart_toStartOf="@+id/saveImg"
+                            app:layout_constraintTop_toTopOf="@+id/saveImg" />
+
+
+                        <ImageView
+                            android:id="@+id/saveImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/describeTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/titleTxt" />
-
-                <TextView
-                    android:id="@+id/hashingAlg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:textColor="@color/teal_200"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
-                    app:layout_constraintStart_toEndOf="@+id/coinImg"
-                    app:layout_constraintTop_toTopOf="@+id/titleTxt" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/saveImg"
-                    app:layout_constraintEnd_toEndOf="@+id/saveImg"
-                    app:layout_constraintStart_toEndOf="@+id/hashingAlg"
-                    app:layout_constraintTop_toTopOf="@+id/saveImg" />
-
-
-                <ImageView
-                    android:id="@+id/saveImg"
-                    android:layout_marginEnd="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/hashingAlg"
-                    app:layout_constraintTop_toTopOf="@+id/titleTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/horizontal" />
 
                 <TextView
                     android:id="@+id/currentPriceTitleTxt"
