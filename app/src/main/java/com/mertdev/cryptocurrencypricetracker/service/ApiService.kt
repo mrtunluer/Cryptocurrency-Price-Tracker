@@ -21,5 +21,4 @@ interface ApiService {
         @Path("id")id: String
     ): CoinDetails
 
-
 }
