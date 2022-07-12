@@ -3,6 +3,7 @@ package com.mertdev.cryptocurrencypricetracker.data.repo
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import javax.inject.Inject
 
 class FirebaseRepo @Inject constructor(firebase: Firebase) {
@@ -31,13 +32,13 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
                 .get()
         }
 
-    fun addFavorite(coinId: String) =
+    fun addFavorite(coinId: String, coinItem: CoinItem) =
         firebaseUser?.let {
             firebaseFirestore.collection("Users")
                 .document(it.uid)
                 .collection("Favorite")
                 .document(coinId)
-                .set("")
+                .set(coinItem)
         }
 
     fun deleteFavorite(coinId: String) =

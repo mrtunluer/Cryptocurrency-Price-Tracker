@@ -94,11 +94,25 @@
                     app:layout_constraintStart_toEndOf="@+id/coinImg"
                     app:layout_constraintTop_toTopOf="@+id/titleTxt" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/saveImg"
+                    app:layout_constraintEnd_toEndOf="@+id/saveImg"
+                    app:layout_constraintStart_toEndOf="@+id/hashingAlg"
+                    app:layout_constraintTop_toTopOf="@+id/saveImg" />
+
+
                 <ImageView
                     android:id="@+id/saveImg"
+                    android:layout_marginEnd="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/hashingAlg"
                     app:layout_constraintTop_toTopOf="@+id/titleTxt" />
 

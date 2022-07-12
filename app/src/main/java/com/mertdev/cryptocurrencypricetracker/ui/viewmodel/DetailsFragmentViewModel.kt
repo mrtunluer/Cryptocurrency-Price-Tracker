@@ -25,8 +25,8 @@ class DetailsFragmentViewModel @Inject constructor(
     private val _detailState = MutableStateFlow<DataStatus<CoinDetails>>(DataStatus.Empty())
     val detailState: StateFlow<DataStatus<CoinDetails>> get() = _detailState
 
-    private val _favoriteState = MutableStateFlow<DataStatus<CoinItem>>(DataStatus.Empty())
-    val favoriteState: StateFlow<DataStatus<CoinItem>> get() = _favoriteState
+    private val _favoriteState = MutableStateFlow<DataStatus<Boolean>>(DataStatus.Empty())
+    val favoriteState: StateFlow<DataStatus<Boolean>> get() = _favoriteState
 
     private val coinId = savedStateHandle.get<String>("id")
 
@@ -54,8 +54,7 @@ class DetailsFragmentViewModel @Inject constructor(
             _favoriteState.value = DataStatus.Loading()
             firebaseRepo.getFavorite(it)?.addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()){
-                    val coinItem = documentSnapshot.toObject(CoinItem::class.java)
-                    _favoriteState.value = DataStatus.Success(coinItem)
+                    _favoriteState.value = DataStatus.Success(true)
                 }else{
                     _favoriteState.value = DataStatus.Empty()
                 }
@@ -65,9 +64,9 @@ class DetailsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun addFavorite() =
+    fun addFavorite(coinItem: CoinItem) =
         coinId?.let {
-            firebaseRepo.addFavorite(it)
+            firebaseRepo.addFavorite(it, coinItem)
         }
 
     fun deleteFavorite() =

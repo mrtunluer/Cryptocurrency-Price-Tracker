@@ -1,6 +1,5 @@
 package com.mertdev.cryptocurrencypricetracker.data.model
 
-
 import com.google.gson.annotations.SerializedName
 
 data class CoinItem(

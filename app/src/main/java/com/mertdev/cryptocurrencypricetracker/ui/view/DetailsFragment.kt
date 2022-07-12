@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
+import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentDetailsBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.DetailsFragmentViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
@@ -21,6 +22,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: DetailsFragmentViewModel by viewModels()
+    private var isFavorite: Boolean? = null
+    private var coinItem: CoinItem? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,16 +44,37 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
 
         binding.saveImg.setOnClickListener {
-
+            isFavorite?.let { favoriteItBefore ->
+                if (favoriteItBefore)
+                    deleteFavorite()
+                else
+                    addFavorite()
+            }
         }
 
+    }
+
+    private fun deleteFavorite(){
+        viewModel.deleteFavorite()?.addOnSuccessListener {
+            binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_border_24)
+            isFavorite = false
+        }
+    }
+
+    private fun addFavorite(){
+        coinItem?.let {
+            viewModel.addFavorite(it)?.addOnSuccessListener {
+                binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_24)
+                isFavorite = true
+            }
+        }
     }
 
     private fun collectFavoriteData(){
         lifecycleScope.launchWhenStarted {
             viewModel.favoriteState.collect{ uiState ->
                 when (uiState){
-                    is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+                    is DataStatus.Loading -> loadingForFavoriteData()
                     is DataStatus.Empty -> emptyForFavoriteData()
                     is DataStatus.Error -> errorForFavoriteData()
                     is DataStatus.Success -> successForFavoriteData()
@@ -66,7 +90,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                     is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
                     is DataStatus.Empty -> emptyForDetailsData()
                     is DataStatus.Error -> errorForDetailsData()
-                    is DataStatus.Success -> uiState.data?.let { successForDetailsData(it) }
+                    is DataStatus.Success -> uiState.data?.let {
+                        successForDetailsData(it)
+                        coinItem = CoinItem(
+                            it.id,
+                            it.marketData?.currentPrice?.usd,
+                            it.name,
+                            it.symbol,
+                            it.image?.large
+                        )
+                    }
                 }
             }
         }
@@ -102,19 +135,29 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         requireContext().showToast("No data here it's empty")
     }
 
+    private fun loadingForFavoriteData(){
+        binding.swipeRefreshLayout.isRefreshing = true
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
     private fun emptyForFavoriteData(){
+        binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
         binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_border_24)
+        isFavorite = false
     }
 
     private fun errorForFavoriteData(){
+        binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
         requireContext().showToast("Failed to fetch data")
     }
 
     private fun successForFavoriteData(){
+        binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
         binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_24)
+        isFavorite = true
     }
 
 }
