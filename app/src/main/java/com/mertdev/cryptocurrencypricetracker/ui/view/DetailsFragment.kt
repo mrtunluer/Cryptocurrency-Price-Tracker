@@ -15,7 +15,6 @@ import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -33,7 +32,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         collectFavoriteData()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            lifecycleScope.launch {
+            lifecycleScope.launchWhenStarted {
                 viewModel.getCoinDetails()
                 viewModel.getFavorite()
             }
