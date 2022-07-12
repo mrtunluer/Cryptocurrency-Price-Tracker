@@ -37,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         initRv()
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             collectCoin()
         }
         loadStateListener()
@@ -72,7 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             override fun afterTextChanged(s: Editable?) {
                 if (s == null || s.isEmpty()){
                     showPagingRv()
-                }else if (s.toString().length >= 2){
+                }else if (s.toString().isNotEmpty()){
                     showSearchRv()
                     filter(s)
                 }
