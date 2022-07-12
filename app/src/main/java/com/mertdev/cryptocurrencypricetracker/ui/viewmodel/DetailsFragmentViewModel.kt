@@ -52,7 +52,7 @@ class DetailsFragmentViewModel @Inject constructor(
     fun getFavorite() {
         coinId?.let {
             _favoriteState.value = DataStatus.Loading()
-            firebaseRepo.getFavorite(coinId)?.addOnSuccessListener { documentSnapshot ->
+            firebaseRepo.getFavorite(it)?.addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()){
                     val coinItem = documentSnapshot.toObject(CoinItem::class.java)
                     _favoriteState.value = DataStatus.Success(coinItem)
@@ -65,10 +65,14 @@ class DetailsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun addFavorite(coinId: String) =
-        firebaseRepo.addFavorite(coinId)
+    fun addFavorite() =
+        coinId?.let {
+            firebaseRepo.addFavorite(it)
+        }
 
-    fun deleteFavorite(coinId: String) =
-        firebaseRepo.deleteFavorite(coinId)
+    fun deleteFavorite() =
+        coinId?.let {
+            firebaseRepo.deleteFavorite(it)
+        }
 
 }
