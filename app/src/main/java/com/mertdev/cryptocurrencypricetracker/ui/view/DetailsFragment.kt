@@ -2,6 +2,8 @@ package com.mertdev.cryptocurrencypricetracker.ui.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -48,6 +50,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
         }
 
+        autoRefreshDetailsData()
+
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getFavorite()
             viewModel.getCoinDetails()
@@ -66,6 +70,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
         }
 
+    }
+
+    private fun autoRefreshDetailsData(){
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                viewModel.getCoinDetails()
+                handler.postDelayed(this, 3000)
+            }
+        }, 3000)
     }
 
     private fun deleteFavorite(){
