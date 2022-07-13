@@ -24,4 +24,7 @@ class AuthViewModel @Inject constructor(
     fun addUserDb(uid: String, user: HashMap<String, Any>) =
         firebaseRepo.addUserDb(uid, user)
 
+    fun signOut() =
+        firebaseRepo.signOut()
+
 }

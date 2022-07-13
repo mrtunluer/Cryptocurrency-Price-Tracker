@@ -12,6 +12,9 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
     val firebaseUser = firebaseAuth.currentUser
     private val firebaseFirestore = firebase.firestore
 
+    fun signOut() =
+        firebaseAuth.signOut()
+
     fun signUpUser(email: String, password: String) =
         firebaseAuth.createUserWithEmailAndPassword(email,password)
 

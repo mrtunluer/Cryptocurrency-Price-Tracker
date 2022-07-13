@@ -52,6 +52,12 @@
         <action
             android:id="@+id/action_viewPagerFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/navigation"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

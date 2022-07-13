@@ -14,7 +14,6 @@ import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.AuthViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.initDialog
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -28,7 +27,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         binding = FragmentRegisterBinding.bind(view)
         initDialog()
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             collectLoginState()
         }
 
