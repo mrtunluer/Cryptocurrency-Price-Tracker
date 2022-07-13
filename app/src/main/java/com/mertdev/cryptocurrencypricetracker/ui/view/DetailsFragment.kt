@@ -31,6 +31,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailsBinding.bind(view)
 
+        binding.swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
+        binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK)
+
         collectDetailsData()
         collectFavoriteData()
 
