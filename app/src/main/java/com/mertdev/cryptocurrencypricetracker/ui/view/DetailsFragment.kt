@@ -77,9 +77,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 viewModel.getCoinDetails()
-                handler.postDelayed(this, 3000)
+                handler.postDelayed(this, 1000)
             }
-        }, 3000)
+        }, 1000)
     }
 
     private fun deleteFavorite(){
