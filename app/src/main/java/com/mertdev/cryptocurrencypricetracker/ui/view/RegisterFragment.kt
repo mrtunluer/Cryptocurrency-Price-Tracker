@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FieldValue
 import com.mertdev.cryptocurrencypricetracker.R
@@ -14,6 +16,7 @@ import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.AuthViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.initDialog
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -27,8 +30,10 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         binding = FragmentRegisterBinding.bind(view)
         initDialog()
 
-        lifecycleScope.launchWhenStarted {
-            collectLoginState()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                collectLoginState()
+            }
         }
 
         binding.signInTxt.setOnClickListener {

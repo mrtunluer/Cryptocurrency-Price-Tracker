@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CoinDetails(
     @SerializedName("id")
-    val id: String?,
+    val id: String,
     @SerializedName("description")
     val description: Description?,
     @SerializedName("hashing_algorithm")

@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
@@ -18,6 +20,7 @@ import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -34,14 +37,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
         binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK)
 
-        collectDetailsData()
-        collectFavoriteData()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    collectFavoriteData()
+                }
+                launch {
+                    collectDetailsData()
+                }
+            }
+        }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            lifecycleScope.launchWhenStarted {
-                viewModel.getCoinDetails()
-                viewModel.getFavorite()
-            }
+            viewModel.getFavorite()
+            viewModel.getCoinDetails()
         }
 
         binding.backBtn.setOnClickListener {
@@ -75,36 +84,31 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
     }
 
-    private fun collectFavoriteData(){
-        lifecycleScope.launchWhenStarted {
-            viewModel.favoriteState.collect{ uiState ->
-                when (uiState){
-                    is DataStatus.Loading -> loadingForFavoriteData()
-                    is DataStatus.Empty -> emptyForFavoriteData()
-                    is DataStatus.Error -> errorForFavoriteData()
-                    is DataStatus.Success -> successForFavoriteData()
-                }
+    private suspend fun collectFavoriteData(){
+        viewModel.favoriteState.collect{ uiState ->
+            when (uiState){is DataStatus.Loading -> loadingForFavoriteData()
+                is DataStatus.Empty -> emptyForFavoriteData()
+                is DataStatus.Error -> errorForFavoriteData()
+                is DataStatus.Success -> successForFavoriteData()
             }
         }
     }
 
-    private fun collectDetailsData(){
-        lifecycleScope.launchWhenStarted {
-            viewModel.detailState.collect{ uiState ->
-                when (uiState){
-                    is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
-                    is DataStatus.Empty -> emptyForDetailsData()
-                    is DataStatus.Error -> errorForDetailsData()
-                    is DataStatus.Success -> uiState.data?.let {
-                        successForDetailsData(it)
-                        coinItem = CoinItem(
-                            it.id,
-                            it.marketData?.currentPrice?.usd,
-                            it.name,
-                            it.symbol,
-                            it.image?.large
-                        )
-                    }
+    private suspend fun collectDetailsData(){
+        viewModel.detailState.collect{ uiState ->
+            when (uiState){
+                is DataStatus.Loading -> binding.swipeRefreshLayout.isRefreshing = true
+                is DataStatus.Empty -> emptyForDetailsData()
+                is DataStatus.Error -> errorForDetailsData()
+                is DataStatus.Success -> uiState.data?.let {
+                    successForDetailsData(it)
+                    coinItem = CoinItem(
+                        it.id,
+                        it.marketData?.currentPrice?.usd,
+                        it.name,
+                        it.symbol,
+                        it.image?.large
+                    )
                 }
             }
         }

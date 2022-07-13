@@ -22,10 +22,10 @@ class DetailsFragmentViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
     ) : ViewModel(){
 
-    private val _detailState = MutableStateFlow<DataStatus<CoinDetails>>(DataStatus.Empty())
+    private val _detailState = MutableStateFlow<DataStatus<CoinDetails>>(DataStatus.Loading())
     val detailState: StateFlow<DataStatus<CoinDetails>> get() = _detailState
 
-    private val _favoriteState = MutableStateFlow<DataStatus<Boolean>>(DataStatus.Empty())
+    private val _favoriteState = MutableStateFlow<DataStatus<Boolean>>(DataStatus.Loading())
     val favoriteState: StateFlow<DataStatus<Boolean>> get() = _favoriteState
 
     private val coinId = savedStateHandle.get<String>("id")
@@ -37,22 +37,20 @@ class DetailsFragmentViewModel @Inject constructor(
 
     fun getCoinDetails(){
         viewModelScope.launch {
-            coinId?.let {
-                _detailState.value = DataStatus.Loading()
-                coinDetailsRepo.getCoinDetails(it)
+            if (coinId != null){
+                coinDetailsRepo.getCoinDetails(coinId)
                     .catch { exception ->
                         _detailState.value =  DataStatus.Error(exception.message.toString())
                     }.collect{ data ->
                         _detailState.value = DataStatus.Success(data)
                     }
-            }
+            }else{ _detailState.value = DataStatus.Empty() }
         }
     }
 
     fun getFavorite() {
-        coinId?.let {
-            _favoriteState.value = DataStatus.Loading()
-            firebaseRepo.getFavorite(it)?.addOnSuccessListener { documentSnapshot ->
+        if (coinId != null){
+            firebaseRepo.getFavorite(coinId)?.addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()){
                     _favoriteState.value = DataStatus.Success(true)
                 }else{
@@ -61,7 +59,7 @@ class DetailsFragmentViewModel @Inject constructor(
             }?.addOnFailureListener { exception ->
                 _favoriteState.value = DataStatus.Error(exception.message)
             }
-        }
+        }else{ _favoriteState.value = DataStatus.Empty() }
     }
 
     fun addFavorite(coinItem: CoinItem) =

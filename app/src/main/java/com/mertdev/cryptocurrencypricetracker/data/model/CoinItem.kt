@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CoinItem(
     @SerializedName("id")
-    val id: String?,
+    val id: String,
     @SerializedName("current_price")
     val currentPrice: Double?,
     @SerializedName("name")
