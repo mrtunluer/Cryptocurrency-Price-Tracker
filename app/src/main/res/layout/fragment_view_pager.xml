@@ -27,6 +27,16 @@
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/white" />
 
+    <ImageView
+        android:id="@+id/logOutBtn"
+        android:src="@drawable/ic_baseline_logout_24"
+        android:layout_margin="10dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tabLayout" />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_marginTop="10dp"
