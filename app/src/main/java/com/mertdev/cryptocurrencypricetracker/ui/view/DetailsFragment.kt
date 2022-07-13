@@ -55,7 +55,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun deleteFavorite(){
         viewModel.deleteFavorite()?.addOnSuccessListener {
-            binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_border_24)
+            binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
             isFavorite = false
         }
     }
@@ -63,7 +63,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun addFavorite(){
         coinItem?.let {
             viewModel.addFavorite(it)?.addOnSuccessListener {
-                binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_24)
+                binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
                 isFavorite = true
             }
         }
@@ -142,7 +142,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun emptyForFavoriteData(){
         binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_border_24)
+        binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
         isFavorite = false
     }
 
@@ -155,7 +155,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun successForFavoriteData(){
         binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.saveImg.setImageResource(R.drawable.ic_baseline_bookmark_24)
+        binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
         isFavorite = true
     }
 
