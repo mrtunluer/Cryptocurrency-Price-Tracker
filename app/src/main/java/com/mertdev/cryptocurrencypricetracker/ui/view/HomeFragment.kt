@@ -10,8 +10,8 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -41,9 +41,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         initRv()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                collectCoin()
-            }
+            collectCoin()
         }
 
         loadStateListener()
@@ -154,7 +152,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private suspend fun collectCoin(){
-        viewModel.state.collectLatest { coinItem ->
+        viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).collectLatest { coinItem ->
             coinItem.coinListData?.let { submitData(it) }
         }
     }

@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FieldValue
 import com.mertdev.cryptocurrencypricetracker.R
@@ -31,9 +31,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         initDialog()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                collectLoginState()
-            }
+            collectLoginState()
         }
 
         binding.signInTxt.setOnClickListener {
@@ -90,7 +88,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private suspend fun collectLoginState(){
-        viewModel.isItLoggedIn.collect { user ->
+        viewModel.isItLoggedIn.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).collect { user ->
             if (user != null){
                 findNavController().navigate(R.id.action_registerFragment_to_viewPagerFragment)
             }
