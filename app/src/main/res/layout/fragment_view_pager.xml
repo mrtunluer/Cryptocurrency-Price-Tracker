@@ -21,7 +21,7 @@
         app:tabGravity="center"
         app:tabIndicator="@drawable/tab_indicator"
         app:tabIndicatorAnimationMode="elastic"
-        app:tabIndicatorColor="@color/teal_200"
+        app:tabIndicatorColor="@color/tab_indicator"
         app:tabIndicatorGravity="stretch"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/white"

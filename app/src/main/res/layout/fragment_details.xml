@@ -85,7 +85,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:layout_marginStart="20dp"
-                        android:textColor="@color/teal_200"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout

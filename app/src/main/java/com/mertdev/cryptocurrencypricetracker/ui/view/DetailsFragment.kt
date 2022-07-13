@@ -1,6 +1,8 @@
 package com.mertdev.cryptocurrencypricetracker.ui.view
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.text.HtmlCompat
@@ -56,7 +58,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun deleteFavorite(){
         viewModel.deleteFavorite()?.addOnSuccessListener {
-            binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
+            binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
             isFavorite = false
         }
     }
@@ -64,7 +66,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun addFavorite(){
         coinItem?.let {
             viewModel.addFavorite(it)?.addOnSuccessListener {
-                binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
+                binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_like_24)
                 isFavorite = true
             }
         }
@@ -109,7 +111,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.swipeRefreshLayout.isRefreshing = false
         binding.titleTxt.text = details.name.plus(" "+details.symbol?.uppercase())
         details.hashingAlgorithm?.let { binding.hashingAlg.text = it }
+
         binding.describeTxt.text = HtmlCompat.fromHtml(details.description?.en.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
+        binding.describeTxt.movementMethod = LinkMovementMethod.getInstance()
+        binding.describeTxt.setLinkTextColor(Color.CYAN)
 
         details.marketData?.currentPrice?.usd?.let {
             binding.currentPriceTitleTxt.visibility = View.VISIBLE
@@ -143,7 +148,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun emptyForFavoriteData(){
         binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_off_alt_24)
+        binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
         isFavorite = false
     }
 
@@ -156,7 +161,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun successForFavoriteData(){
         binding.progressBar.visibility = View.GONE
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24)
+        binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_like_24)
         isFavorite = true
     }
 
