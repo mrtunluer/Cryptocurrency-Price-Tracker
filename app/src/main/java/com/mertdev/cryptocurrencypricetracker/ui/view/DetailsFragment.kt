@@ -3,6 +3,7 @@ package com.mertdev.cryptocurrencypricetracker.ui.view
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -108,7 +109,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.swipeRefreshLayout.isRefreshing = false
         binding.titleTxt.text = details.name.plus(" "+details.symbol?.uppercase())
         details.hashingAlgorithm?.let { binding.hashingAlg.text = it }
-        binding.describeTxt.text = details.description.toString()
+        binding.describeTxt.text = HtmlCompat.fromHtml(details.description?.en.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY);
 
         details.marketData?.currentPrice?.usd?.let {
             binding.currentPriceTitleTxt.visibility = View.VISIBLE
