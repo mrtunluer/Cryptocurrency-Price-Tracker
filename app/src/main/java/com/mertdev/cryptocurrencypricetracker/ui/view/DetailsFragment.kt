@@ -109,7 +109,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.swipeRefreshLayout.isRefreshing = false
         binding.titleTxt.text = details.name.plus(" "+details.symbol?.uppercase())
         details.hashingAlgorithm?.let { binding.hashingAlg.text = it }
-        binding.describeTxt.text = HtmlCompat.fromHtml(details.description?.en.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY);
+        binding.describeTxt.text = HtmlCompat.fromHtml(details.description?.en.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         details.marketData?.currentPrice?.usd?.let {
             binding.currentPriceTitleTxt.visibility = View.VISIBLE
