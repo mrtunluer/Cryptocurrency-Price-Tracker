@@ -49,12 +49,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         coinsPagingAdapter.setOnItemClickListener {
             val bundle = bundleOf("id" to it.id)
-            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
+            findNavController().navigate(R.id.action_viewPagerFragment_to_detailsFragment, bundle)
         }
 
         searchAdapter.setOnItemClickListener {
             val bundle = bundleOf("id" to it.id)
-            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, bundle)
+            findNavController().navigate(R.id.action_viewPagerFragment_to_detailsFragment, bundle)
         }
 
     }

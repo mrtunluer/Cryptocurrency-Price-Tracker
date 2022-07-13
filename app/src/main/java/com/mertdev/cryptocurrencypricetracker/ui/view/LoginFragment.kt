@@ -51,7 +51,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun onSuccessLogin(){
         progress.dismiss()
-        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        findNavController().navigate(R.id.action_loginFragment_to_viewPagerFragment)
     }
 
     private fun onFailureLogin(e: Exception){

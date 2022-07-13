@@ -7,4 +7,7 @@ object Constants {
     const val VS_CURRENCY = "usd"
     const val NETWORK_PAGE_SIZE = 100
     const val PREFETCH_DISTANCE = 1
+    const val NUM_TABS = 2
+    val TABS_FRAGMENT_TEXT = arrayOf("COINS","FAVORITES")
+
 }

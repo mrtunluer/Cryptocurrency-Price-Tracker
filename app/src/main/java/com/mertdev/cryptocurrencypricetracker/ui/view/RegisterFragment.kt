@@ -65,7 +65,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.addUserDb(uid, user)
             .addOnSuccessListener {
                 progress.dismiss()
-                findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_viewPagerFragment)
             }.addOnFailureListener {
                 progress.dismiss()
                 requireContext().showToast(it.message.toString())
@@ -88,7 +88,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private suspend fun collectLoginState(){
         viewModel.isItLoggedIn.collect { user ->
             if (user != null){
-                findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_viewPagerFragment)
             }
         }
     }
