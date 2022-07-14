@@ -79,6 +79,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             refreshIntervalDialog.show()
         }
 
+        intervalRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
+
+        }
+
     }
 
     private fun autoRefreshDetailsData(){
