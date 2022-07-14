@@ -1,5 +1,6 @@
 package com.mertdev.cryptocurrencypricetracker.ui.view
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -19,6 +20,7 @@ import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentDetailsBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.DetailsFragmentViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
+import com.mertdev.cryptocurrencypricetracker.utils.initDialog
 import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,13 +33,13 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private val viewModel: DetailsFragmentViewModel by viewModels()
     private var isFavorite: Boolean? = null
     private var coinItem: CoinItem? = null
+    private lateinit var refreshIntervalDialog: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailsBinding.bind(view)
 
-        binding.swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
-        binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK)
+        init()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -68,6 +70,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 else
                     addFavorite()
             }
+        }
+
+        binding.timeLineImg.setOnClickListener {
+            refreshIntervalDialog.show()
         }
 
     }
@@ -184,6 +190,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.swipeRefreshLayout.isRefreshing = false
         binding.saveImg.setImageResource(R.drawable.ic_baseline_thumb_up_alt_like_24)
         isFavorite = true
+    }
+
+    private fun init(){
+        binding.swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
+        binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK)
+
+        refreshIntervalDialog = Dialog(requireContext())
+        refreshIntervalDialog.initDialog(R.layout.refresh_interval_dialog, true)
     }
 
 }
