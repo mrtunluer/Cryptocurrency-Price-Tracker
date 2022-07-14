@@ -121,6 +121,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun autoRefreshDetailsData(delay: Long){
         handler.postDelayed(Runnable {
+            viewModel.getCoinDetails()
             handler.postDelayed(runnable!!, delay)
         }.also { runnable = it }, delay)
     }
