@@ -2,10 +2,12 @@ package com.mertdev.cryptocurrencypricetracker.ui.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.data.repo.CoinDetailsRepo
+import com.mertdev.cryptocurrencypricetracker.data.repo.DataStoreRepository
 import com.mertdev.cryptocurrencypricetracker.data.repo.FirebaseRepo
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class DetailsFragmentViewModel @Inject constructor(
     private val coinDetailsRepo: CoinDetailsRepo,
     private val firebaseRepo: FirebaseRepo,
+    private val dataStoreRepository: DataStoreRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(){
 
@@ -30,10 +33,17 @@ class DetailsFragmentViewModel @Inject constructor(
 
     private val coinId = savedStateHandle.get<String>("id")
 
+    val readFromDataStore = dataStoreRepository.readFromDataStore.asLiveData()
+
     init {
         getCoinDetails()
         getFavorite()
     }
+
+    fun saveToDataStore(interval: String) =
+        viewModelScope.launch {
+            dataStoreRepository.saveToDataStore(interval)
+        }
 
     fun getCoinDetails(){
         viewModelScope.launch {
