@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.RadioGroup
@@ -21,11 +20,13 @@ import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentDetailsBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.DetailsFragmentViewModel
+import com.mertdev.cryptocurrencypricetracker.utils.Constants.INITIAL_INTERVAL
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import com.mertdev.cryptocurrencypricetracker.utils.initDialog
 import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 import com.mertdev.cryptocurrencypricetracker.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -35,7 +36,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private val viewModel: DetailsFragmentViewModel by viewModels()
     private var isFavorite: Boolean? = null
     private var coinItem: CoinItem? = null
-    private var delay: Long = 30
+
+    private var handler: Handler = Handler(Looper.getMainLooper())
+    private var runnable: Runnable? = null
+    private var delay: Long = INITIAL_INTERVAL.toLong()
 
     private lateinit var refreshIntervalDialog: Dialog
     private lateinit var intervalRadioGroup: RadioGroup
@@ -111,18 +115,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private fun saveDataStore(interval: String){
+        runnable?.let { handler.removeCallbacks(it) }
         viewModel.saveToDataStore(interval)
     }
 
     private fun autoRefreshDetailsData(delay: Long){
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                Log.i("lkashdklasd","assldbliasndkasdasd")
-                viewModel.getCoinDetails()
-                handler.postDelayed(this, delay)
-            }
-        }, delay)
+        handler.postDelayed(Runnable {
+            handler.postDelayed(runnable!!, delay)
+        }.also { runnable = it }, delay)
     }
 
     private fun deleteFavorite(){

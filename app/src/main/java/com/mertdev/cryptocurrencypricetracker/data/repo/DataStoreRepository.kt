@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.DATA_STORE_NAME
+import com.mertdev.cryptocurrencypricetracker.utils.Constants.INITIAL_INTERVAL
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -37,7 +38,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
                 throw exception
             }
         }.map { preference ->
-            val interval = preference[PreferenceKeys.interval] ?: "30"
+            val interval = preference[PreferenceKeys.interval] ?: INITIAL_INTERVAL
             interval
         }
 
