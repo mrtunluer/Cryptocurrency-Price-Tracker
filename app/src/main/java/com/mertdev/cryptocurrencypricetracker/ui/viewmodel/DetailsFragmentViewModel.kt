@@ -21,7 +21,7 @@ import javax.inject.Inject
 class DetailsFragmentViewModel @Inject constructor(
     private val coinDetailsRepo: CoinDetailsRepo,
     private val firebaseRepo: FirebaseRepo,
-    private val dataStoreRepository: DataStoreRepository,
+    private val dataStoreRepo: DataStoreRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(){
 
@@ -33,7 +33,7 @@ class DetailsFragmentViewModel @Inject constructor(
 
     private val coinId = savedStateHandle.get<String>("id")
 
-    val readFromDataStore = dataStoreRepository.readFromDataStore.asLiveData()
+    val readFromDataStore = dataStoreRepo.readFromDataStore.asLiveData()
 
     init {
         getCoinDetails()
@@ -42,7 +42,7 @@ class DetailsFragmentViewModel @Inject constructor(
 
     fun saveToDataStore(interval: String) =
         viewModelScope.launch {
-            dataStoreRepository.saveToDataStore(interval)
+            dataStoreRepo.saveToDataStore(interval)
         }
 
     fun getCoinDetails(){
