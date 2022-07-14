@@ -20,7 +20,7 @@ class DetailsFragmentViewModel @Inject constructor(
     private val coinDetailsRepo: CoinDetailsRepo,
     private val firebaseRepo: FirebaseRepo,
     savedStateHandle: SavedStateHandle
-    ) : ViewModel(){
+) : ViewModel(){
 
     private val _detailState = MutableStateFlow<DataStatus<CoinDetails>>(DataStatus.Loading())
     val detailState: StateFlow<DataStatus<CoinDetails>> get() = _detailState

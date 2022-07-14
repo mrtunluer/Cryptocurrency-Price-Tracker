@@ -1,4 +1,4 @@
-package com.mertdev.cryptocurrencypricetracker.utils
+package com.mertdev.cryptocurrencypricetracker.data.repo
 
 import android.content.Context
 import android.util.Log
