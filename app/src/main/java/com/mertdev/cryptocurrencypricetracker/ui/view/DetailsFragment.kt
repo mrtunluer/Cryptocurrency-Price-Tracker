@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.RadioGroup
@@ -34,6 +35,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private val viewModel: DetailsFragmentViewModel by viewModels()
     private var isFavorite: Boolean? = null
     private var coinItem: CoinItem? = null
+    private var delay: Long = 30
 
     private lateinit var refreshIntervalDialog: Dialog
     private lateinit var intervalRadioGroup: RadioGroup
@@ -55,7 +57,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
         }
 
-        autoRefreshDetailsData()
+        observeDataStore()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getFavorite()
@@ -80,19 +82,47 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
 
         intervalRadioGroup.setOnCheckedChangeListener { _, id ->
-
+            when (id) {
+                R.id.fiveSec -> saveDataStore("5")
+                R.id.fifteenSec -> saveDataStore("15")
+                R.id.thirtySec -> saveDataStore("30")
+                R.id.fortyFiveSec -> saveDataStore("45")
+            }
         }
 
     }
 
-    private fun autoRefreshDetailsData(){
+    private fun convertToMillis(interval: String) =
+        interval.toLong() * 1000
+
+    private fun observeDataStore(){
+        viewModel.readFromDataStore.observe(viewLifecycleOwner) { interval ->
+            interval?.let {
+                when (it) {
+                    "5" -> intervalRadioGroup.check(R.id.fiveSec)
+                    "15" -> intervalRadioGroup.check(R.id.fifteenSec)
+                    "30" -> intervalRadioGroup.check(R.id.thirtySec)
+                    "45" -> intervalRadioGroup.check(R.id.fortyFiveSec)
+                }
+                delay = convertToMillis(it)
+                autoRefreshDetailsData(delay)
+            }
+        }
+    }
+
+    private fun saveDataStore(interval: String){
+        viewModel.saveToDataStore(interval)
+    }
+
+    private fun autoRefreshDetailsData(delay: Long){
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(object : Runnable {
             override fun run() {
+                Log.i("lkashdklasd","assldbliasndkasdasd")
                 viewModel.getCoinDetails()
-                handler.postDelayed(this, 2000)
+                handler.postDelayed(this, delay)
             }
-        }, 2000)
+        }, delay)
     }
 
     private fun deleteFavorite(){

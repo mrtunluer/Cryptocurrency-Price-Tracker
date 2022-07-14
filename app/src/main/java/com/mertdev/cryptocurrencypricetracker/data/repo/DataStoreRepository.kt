@@ -37,7 +37,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
                 throw exception
             }
         }.map { preference ->
-            val interval = preference[PreferenceKeys.interval] ?: ""
+            val interval = preference[PreferenceKeys.interval] ?: "30"
             interval
         }
 
