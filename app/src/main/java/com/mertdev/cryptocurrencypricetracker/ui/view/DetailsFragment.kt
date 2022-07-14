@@ -8,6 +8,7 @@ import android.os.Looper
 import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.RadioGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -33,7 +34,9 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private val viewModel: DetailsFragmentViewModel by viewModels()
     private var isFavorite: Boolean? = null
     private var coinItem: CoinItem? = null
+
     private lateinit var refreshIntervalDialog: Dialog
+    private lateinit var intervalRadioGroup: RadioGroup
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -198,6 +201,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         refreshIntervalDialog = Dialog(requireContext())
         refreshIntervalDialog.initDialog(R.layout.refresh_interval_dialog, true)
+        intervalRadioGroup = refreshIntervalDialog.findViewById(R.id.intervalRadioGroup)
     }
 
 }
