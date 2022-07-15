@@ -58,10 +58,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 launch {
                     collectDetailsData()
                 }
+                launch {
+                    collectDataStore()
+                }
             }
         }
 
-        observeDataStore()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getFavorite()
@@ -99,18 +101,16 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun convertToMillis(interval: String) =
         interval.toLong() * 1000
 
-    private fun observeDataStore(){
-        viewModel.readFromDataStore.observe(viewLifecycleOwner) { interval ->
-            interval?.let {
-                when (it) {
-                    "5" -> intervalRadioGroup.check(R.id.fiveSec)
-                    "15" -> intervalRadioGroup.check(R.id.fifteenSec)
-                    "30" -> intervalRadioGroup.check(R.id.thirtySec)
-                    "45" -> intervalRadioGroup.check(R.id.fortyFiveSec)
-                }
-                delay = convertToMillis(it)
-                autoRefreshDetailsData(delay)
+    private suspend fun collectDataStore(){
+        viewModel.readFromDataStore.collect{ interval ->
+            when (interval) {
+                "5" -> intervalRadioGroup.check(R.id.fiveSec)
+                "15" -> intervalRadioGroup.check(R.id.fifteenSec)
+                "30" -> intervalRadioGroup.check(R.id.thirtySec)
+                "45" -> intervalRadioGroup.check(R.id.fortyFiveSec)
             }
+            delay = convertToMillis(interval)
+            autoRefreshDetailsData(delay)
         }
     }
 
