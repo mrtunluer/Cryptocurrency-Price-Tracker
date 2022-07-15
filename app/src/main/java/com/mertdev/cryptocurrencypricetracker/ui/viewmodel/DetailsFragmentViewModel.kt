@@ -10,11 +10,9 @@ import com.mertdev.cryptocurrencypricetracker.data.repo.DataStoreRepository
 import com.mertdev.cryptocurrencypricetracker.data.repo.FirebaseRepo
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,7 +32,7 @@ class DetailsFragmentViewModel @Inject constructor(
 
     private val coinId = savedStateHandle.get<String>("id")
 
-    val readFromDataStore = dataStoreRepo.readFromDataStore.flowOn(Dispatchers.IO)
+    val readFromDataStore = dataStoreRepo.readFromDataStore
 
     init {
         getCoinDetails()
