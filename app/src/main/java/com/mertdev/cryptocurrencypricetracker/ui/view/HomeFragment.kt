@@ -14,7 +14,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.adapter.CoinsPagingAdapter
@@ -145,15 +144,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun submitData(pagingData: PagingData<CoinItem>){
-        lifecycleScope.launch{
-            coinsPagingAdapter.submitData(pagingData)
-        }
-    }
-
     private suspend fun collectCoin(){
         viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).collectLatest { coinItem ->
-            coinItem.coinListData?.let { submitData(it) }
+            coinItem.coinListData?.let { coinsPagingAdapter.submitData(it) }
         }
     }
 
