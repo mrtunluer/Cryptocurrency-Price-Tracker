@@ -1,6 +1,6 @@
 package com.mertdev.cryptocurrencypricetracker.ui.view
 
-import android.graphics.Color
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -11,13 +11,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mertdev.cryptocurrencypricetracker.R
-import com.mertdev.cryptocurrencypricetracker.adapter.FavoriteCoinsPagingAdapter
-import com.mertdev.cryptocurrencypricetracker.adapter.FooterAdapter
+import com.mertdev.cryptocurrencypricetracker.adapter.FavoriteCoinsAdapter
+import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentFavoriteBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.FavoriteFragmentViewModel
+import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
+import com.mertdev.cryptocurrencypricetracker.utils.initDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -27,53 +28,59 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
 
     private lateinit var binding: FragmentFavoriteBinding
     private val viewModel: FavoriteFragmentViewModel by viewModels()
-    private val favoriteCoinsPagingAdapter = FavoriteCoinsPagingAdapter()
+    private val favoriteCoinsAdapter = FavoriteCoinsAdapter()
+    private lateinit var progress: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoriteBinding.bind(view)
-        initRv()
-        loadStateListener()
+        init()
 
         viewLifecycleOwner.lifecycleScope.launch {
             collectFavoriteCoins()
         }
 
-        favoriteCoinsPagingAdapter.setOnItemClickListener {
+        favoriteCoinsAdapter.setOnItemClickListener {
             val bundle = bundleOf("id" to it.id)
             findNavController().navigate(R.id.action_viewPagerFragment_to_detailsFragment, bundle)
-        }
-
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getFavoriteCoins()
         }
 
     }
 
     private suspend fun collectFavoriteCoins(){
-        viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).collectLatest { coinItem ->
-            coinItem.coinListData?.let { favoriteCoinsPagingAdapter.submitData(it) }
+        viewModel.getFavoriteCoins().flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).collectLatest { state ->
+            when (state) {
+                is DataStatus.Loading -> progress.show()
+                is DataStatus.Success -> state.data?.let { onSuccess(it) }
+                is DataStatus.Error -> onError()
+                is DataStatus.Empty -> onEmpty()
+            }
         }
     }
 
-    private fun loadStateListener(){
-        favoriteCoinsPagingAdapter.addLoadStateListener { combinedLoadStates ->
-            binding.swipeRefreshLayout.isRefreshing = combinedLoadStates.source.refresh is LoadState.Loading
-            binding.errorTxt.isVisible = combinedLoadStates.source.refresh is LoadState.Error
-        }
+    private fun onError(){
+        binding.errorTxt.isVisible = true
+        progress.dismiss()
     }
 
-    private fun initRv(){
+    private fun onSuccess(coinItemList: List<CoinItem>){
+        progress.dismiss()
+        favoriteCoinsAdapter.submitList(coinItemList)
+    }
 
-        binding.swipeRefreshLayout.setColorSchemeColors(Color.WHITE)
-        binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.BLACK)
+    private fun onEmpty(){
+        binding.noResultTxt.isVisible = true
+        progress.dismiss()
+    }
+
+    private fun init(){
+        progress = Dialog(requireContext())
+        progress.initDialog(R.layout.custom_progress, false)
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
-            adapter = favoriteCoinsPagingAdapter.withLoadStateFooter(FooterAdapter{
-                favoriteCoinsPagingAdapter.retry() })
+            adapter = favoriteCoinsAdapter
         }
-
     }
 
 }

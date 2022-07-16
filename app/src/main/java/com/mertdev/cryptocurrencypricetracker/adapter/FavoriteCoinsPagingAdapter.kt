@@ -3,16 +3,16 @@ package com.mertdev.cryptocurrencypricetracker.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FavoriteItemBinding
 import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 
-class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagingAdapter.ViewHolder>(Companion) {
+class FavoriteCoinsAdapter: RecyclerView.Adapter<FavoriteCoinsAdapter.ViewHolder>() {
 
-    companion object : DiffUtil.ItemCallback<CoinItem>() {
+    private val differCallback = object : DiffUtil.ItemCallback<CoinItem>() {
         override fun areItemsTheSame(oldItem: CoinItem, newItem: CoinItem): Boolean {
             return oldItem.id == newItem.id
         }
@@ -21,6 +21,15 @@ class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagin
         override fun areContentsTheSame(oldItem: CoinItem, newItem: CoinItem): Boolean {
             return oldItem == newItem
         }
+    }
+    private val differ = AsyncListDiffer(this, differCallback)
+
+    fun submitList(list: List<CoinItem>) {
+        differ.submitList(list)
+    }
+
+    private fun getItem(position: Int): CoinItem {
+        return differ.currentList[position]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +44,7 @@ class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagin
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val coin = getItem(position) ?: return
+        val coin = getItem(position)
 
         holder.apply {
             coin.image?.let { binding.image.loadImageFromUrl(it) }
@@ -45,9 +54,12 @@ class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagin
                     it(coin)
                 }
             }
-
         }
 
+    }
+
+    override fun getItemCount(): Int {
+        return differ.currentList.size
     }
 
     inner class ViewHolder(val binding: FavoriteItemBinding):
