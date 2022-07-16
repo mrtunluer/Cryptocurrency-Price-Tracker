@@ -35,7 +35,6 @@ class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagin
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val coin = getItem(position) ?: return
-
     }
 
     inner class ViewHolder(val binding: FavoriteItemBinding):

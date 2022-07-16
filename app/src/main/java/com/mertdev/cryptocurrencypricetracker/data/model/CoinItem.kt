@@ -4,14 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class CoinItem(
     @SerializedName("id")
-    val id: String,
+    val id: String = "",
     @SerializedName("current_price")
-    val currentPrice: Double?,
+    val currentPrice: Double? = null,
     @SerializedName("name")
-    val name: String?,
+    val name: String? = null,
     @SerializedName("symbol")
-    val symbol: String?,
+    val symbol: String? = null,
     @SerializedName("image")
-    val image: String?
+    val image: String? = null
 )
-
