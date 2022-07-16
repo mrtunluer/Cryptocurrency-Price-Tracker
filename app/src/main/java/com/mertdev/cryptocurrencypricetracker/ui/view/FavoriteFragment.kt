@@ -44,6 +44,10 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             findNavController().navigate(R.id.action_viewPagerFragment_to_detailsFragment, bundle)
         }
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getFavoriteCoins()
+        }
+
     }
 
     private suspend fun collectFavoriteCoins(){

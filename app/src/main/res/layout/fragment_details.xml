@@ -91,7 +91,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="5dp"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
@@ -107,12 +110,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="10dp"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="10dp"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
@@ -146,40 +149,12 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/describeTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="20dp"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/horizontal" />
-
-                <TextView
-                    android:id="@+id/currentPriceTitleTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="Current Price "
-                    android:textColor="@color/white"
-                    android:visibility="gone"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/describeTxt" />
-
-                <TextView
                     android:id="@+id/currentPriceTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
                     android:textColor="@color/teal_200"
                     android:visibility="gone"
                     android:gravity="center"
@@ -187,8 +162,23 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/currentPriceTitleTxt"
+                    app:layout_constraintTop_toBottomOf="@+id/horizontal"
                     app:drawableEndCompat="@drawable/ic_baseline_attach_money_24" />
+
+                <TextView
+                    android:id="@+id/describeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/currentPriceTxt" />
+
 
                 <TextView
                     android:id="@+id/percentTitleTxt"
@@ -196,16 +186,15 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingStart="20dp"
-                    android:paddingTop="20dp"
                     android:paddingEnd="20dp"
-                    android:text="Price change percentage over the last 24 hours "
+                    android:text="- Price change percentage over the last 24 hours "
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/currentPriceTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/describeTxt" />
 
                 <TextView
                     android:id="@+id/percentTxt"

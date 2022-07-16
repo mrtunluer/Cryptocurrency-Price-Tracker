@@ -182,7 +182,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.describeTxt.setLinkTextColor(Color.CYAN)
 
         details.marketData?.currentPrice?.usd?.let {
-            binding.currentPriceTitleTxt.visibility = View.VISIBLE
             binding.currentPriceTxt.visibility = View.VISIBLE
             binding.currentPriceTxt.text = it.toString()
         }
