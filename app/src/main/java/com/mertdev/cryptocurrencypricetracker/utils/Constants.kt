@@ -6,9 +6,9 @@ object Constants {
     const val COIN_DETAILS = "coins/{id}"
     const val VS_CURRENCY = "usd"
     const val COIN_PAGE_SIZE = 100
-    const val FAVORITE_PAGE_SIZE = 20
     const val PREFETCH_DISTANCE = 1
     const val NUM_TABS = 2
+    const val SPAN_COUNT = 4
     const val INITIAL_INTERVAL = "30"
     const val DATA_STORE_NAME = "refresh_interval"
     val TABS_FRAGMENT_TEXT = arrayOf("COINS","FAVORITES")

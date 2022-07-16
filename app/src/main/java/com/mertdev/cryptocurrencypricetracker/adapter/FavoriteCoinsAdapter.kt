@@ -48,7 +48,7 @@ class FavoriteCoinsAdapter: RecyclerView.Adapter<FavoriteCoinsAdapter.ViewHolder
 
         holder.apply {
             coin.image?.let { binding.image.loadImageFromUrl(it) }
-
+            binding.nameTxt.text = coin.name
             itemView.setOnClickListener {
                 onItemClickListener?.let {
                     it(coin)

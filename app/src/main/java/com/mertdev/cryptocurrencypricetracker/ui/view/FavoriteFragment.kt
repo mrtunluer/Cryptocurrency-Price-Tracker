@@ -11,12 +11,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.adapter.FavoriteCoinsAdapter
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentFavoriteBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.FavoriteFragmentViewModel
+import com.mertdev.cryptocurrencypricetracker.utils.Constants.SPAN_COUNT
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import com.mertdev.cryptocurrencypricetracker.utils.initDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +79,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
         progress.initDialog(R.layout.custom_progress, false)
 
         binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
+            layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT, GridLayoutManager.VERTICAL, false)
             adapter = favoriteCoinsAdapter
         }
     }
