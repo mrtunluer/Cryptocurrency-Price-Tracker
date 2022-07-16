@@ -5,6 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -67,7 +68,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
         val subscription = favoriteCoinsQuery?.addSnapshotListener { snapshots, exception ->
             exception?.let {
                 trySend(DataStatus.Error(it.message.toString())).isSuccess
-                //cancel
+                cancel()
             }
             snapshots?.let { querySnapshot ->
                 trySend(DataStatus.Success(querySnapshot.toObjects(CoinItem::class.java))).isSuccess
