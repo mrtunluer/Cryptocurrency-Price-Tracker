@@ -1,6 +1,7 @@
 package com.mertdev.cryptocurrencypricetracker.data.repo
 
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
@@ -20,6 +21,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
         firebaseFirestore.collection("Users")
             .document(it.uid)
             .collection("Favorites")
+            .orderBy("date", Query.Direction.DESCENDING)
     }
 
     fun signOut() =

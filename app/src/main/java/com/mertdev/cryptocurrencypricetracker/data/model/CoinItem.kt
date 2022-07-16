@@ -1,5 +1,7 @@
 package com.mertdev.cryptocurrencypricetracker.data.model
 
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ServerTimestamp
 import com.google.gson.annotations.SerializedName
 
 data class CoinItem(
@@ -12,5 +14,7 @@ data class CoinItem(
     @SerializedName("symbol")
     val symbol: String? = null,
     @SerializedName("image")
-    val image: String? = null
+    val image: String? = null,
+    @ServerTimestamp
+    val date: Timestamp? = null
 )
