@@ -66,7 +66,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getFavorite()
+            viewModel.isFavorite()
             viewModel.getCoinDetails()
         }
 

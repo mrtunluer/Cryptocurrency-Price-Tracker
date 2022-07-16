@@ -36,7 +36,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
             .document(uid)
             .set(user)
 
-    fun getFavorite(coinId: String) =
+    fun isFavorite(coinId: String) =
         firebaseUser?.let {
             firebaseFirestore.collection("Users")
                 .document(it.uid)

@@ -36,7 +36,7 @@ class DetailsFragmentViewModel @Inject constructor(
 
     init {
         getCoinDetails()
-        getFavorite()
+        isFavorite()
     }
 
     fun saveToDataStore(interval: String) =
@@ -57,9 +57,9 @@ class DetailsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun getFavorite() {
+    fun isFavorite() {
         if (coinId != null){
-            firebaseRepo.getFavorite(coinId)?.addOnSuccessListener { documentSnapshot ->
+            firebaseRepo.isFavorite(coinId)?.addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()){
                     _favoriteState.value = DataStatus.Success(true)
                 }else{
