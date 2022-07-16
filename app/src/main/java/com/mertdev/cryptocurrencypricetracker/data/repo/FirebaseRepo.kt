@@ -71,7 +71,10 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
                 cancel()
             }
             snapshots?.let { querySnapshot ->
-                trySend(DataStatus.Success(querySnapshot.toObjects(CoinItem::class.java))).isSuccess
+                if (querySnapshot.isEmpty)
+                    trySend(DataStatus.Empty()).isSuccess
+                else
+                    trySend(DataStatus.Success(querySnapshot.toObjects(CoinItem::class.java))).isSuccess
             } ?: trySend(DataStatus.Empty()).isSuccess
         }
         awaitClose { subscription?.remove() }
