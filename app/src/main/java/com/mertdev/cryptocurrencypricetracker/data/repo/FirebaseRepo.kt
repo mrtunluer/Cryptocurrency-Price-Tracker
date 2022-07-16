@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class FirebaseRepo @Inject constructor(firebase: Firebase) {
 
-    val firebaseAuth = firebase.auth
+    private val firebaseAuth = firebase.auth
     val firebaseUser = firebaseAuth.currentUser
     private val firebaseFirestore = firebase.firestore
 
@@ -30,7 +30,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
         firebaseUser?.let {
             firebaseFirestore.collection("Users")
                 .document(it.uid)
-                .collection("Favorite")
+                .collection("Favorites")
                 .document(coinId)
                 .get()
         }
@@ -39,7 +39,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
         firebaseUser?.let {
             firebaseFirestore.collection("Users")
                 .document(it.uid)
-                .collection("Favorite")
+                .collection("Favorites")
                 .document(coinId)
                 .set(coinItem)
         }
@@ -48,9 +48,16 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
         firebaseUser?.let {
             firebaseFirestore.collection("Users")
                 .document(it.uid)
-                .collection("Favorite")
+                .collection("Favorites")
                 .document(coinId)
                 .delete()
+        }
+
+    fun getFavorites() =
+        firebaseUser?.let {
+            firebaseFirestore.collection("Users")
+                .document(it.uid)
+                .collection("Favorites")
         }
 
 }
