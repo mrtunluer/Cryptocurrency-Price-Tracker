@@ -4,6 +4,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
+import com.mertdev.cryptocurrencypricetracker.utils.Constants.FAVORITE_PAGE_SIZE
 import javax.inject.Inject
 
 class FirebaseRepo @Inject constructor(firebase: Firebase) {
@@ -58,6 +59,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
             firebaseFirestore.collection("Users")
                 .document(it.uid)
                 .collection("Favorites")
+                .limit(FAVORITE_PAGE_SIZE.toLong())
         }
 
 }

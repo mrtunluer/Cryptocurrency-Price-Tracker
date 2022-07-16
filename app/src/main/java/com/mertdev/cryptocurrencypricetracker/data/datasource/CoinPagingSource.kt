@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.service.ApiService
-import com.mertdev.cryptocurrencypricetracker.utils.Constants.NETWORK_PAGE_SIZE
+import com.mertdev.cryptocurrencypricetracker.utils.Constants.COIN_PAGE_SIZE
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.VS_CURRENCY
 import retrofit2.HttpException
 import java.io.IOException
@@ -34,7 +34,7 @@ class CoinPagingSource @Inject constructor(
                 if (coinItem.isEmpty()) {
                     null
                 } else {
-                    pageIndex + (params.loadSize / NETWORK_PAGE_SIZE)
+                    pageIndex + (params.loadSize / COIN_PAGE_SIZE)
                 }
             LoadResult.Page(
                 data = coinItem,

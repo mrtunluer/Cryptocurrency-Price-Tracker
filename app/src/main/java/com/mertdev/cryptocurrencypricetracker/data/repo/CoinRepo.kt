@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.mertdev.cryptocurrencypricetracker.data.datasource.CoinPagingSource
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
-import com.mertdev.cryptocurrencypricetracker.utils.Constants.NETWORK_PAGE_SIZE
+import com.mertdev.cryptocurrencypricetracker.utils.Constants.COIN_PAGE_SIZE
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.PREFETCH_DISTANCE
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class CoinRepo @Inject constructor(private val coinPagingSource: CoinPagingSourc
     fun getCoins(): Flow<PagingData<CoinItem>> {
         return Pager(
             config = PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE,
+                pageSize = COIN_PAGE_SIZE,
                 enablePlaceholders = false,
                 prefetchDistance = PREFETCH_DISTANCE
             ),
