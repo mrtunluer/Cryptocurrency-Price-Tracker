@@ -28,7 +28,7 @@ class FavoritePagingSource @Inject constructor(
                 prevKey = null,
                 nextKey = nextPage
             )
-        } catch (e: Exception) {
+        }catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

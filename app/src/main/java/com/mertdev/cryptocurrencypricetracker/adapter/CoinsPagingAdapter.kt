@@ -42,16 +42,17 @@ class CoinsPagingAdapter: PagingDataAdapter<CoinItem, CoinsPagingAdapter.ViewHol
         val price = coin.currentPrice.toString()
         val imageUrl = coin.image.toString()
 
-        holder.binding.coinImg.loadImageFromUrl(imageUrl)
-        holder.binding.coinText.text = name.plus(" $symbol")
-        holder.binding.priceTxt.text = price
+        holder.apply {
+            binding.coinImg.loadImageFromUrl(imageUrl)
+            binding.coinText.text = name.plus(" $symbol")
+            binding.priceTxt.text = price
 
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.let {
-                it(coin)
+            itemView.setOnClickListener {
+                onItemClickListener?.let {
+                    it(coin)
+                }
             }
         }
-
     }
 
     inner class ViewHolder(val binding: CoinsItemBinding):

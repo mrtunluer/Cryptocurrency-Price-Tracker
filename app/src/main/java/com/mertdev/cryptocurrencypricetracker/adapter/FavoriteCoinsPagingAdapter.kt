@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FavoriteItemBinding
+import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
 
 class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagingAdapter.ViewHolder>(Companion) {
 
@@ -35,6 +36,18 @@ class FavoriteCoinsPagingAdapter: PagingDataAdapter<CoinItem, FavoriteCoinsPagin
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val coin = getItem(position) ?: return
+
+        holder.apply {
+            coin.image?.let { binding.image.loadImageFromUrl(it) }
+
+            itemView.setOnClickListener {
+                onItemClickListener?.let {
+                    it(coin)
+                }
+            }
+
+        }
+
     }
 
     inner class ViewHolder(val binding: FavoriteItemBinding):
