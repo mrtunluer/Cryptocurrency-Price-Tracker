@@ -1,6 +1,6 @@
 # Cryptocurrency Price Tracker
 
-Cryptocurrency price tracking application that I developed with <a href="https://www.coingecko.com/" target="_blank">CoinGecko Api</a>
+Cryptocurrency price tracking app that I developed with <a href="https://www.coingecko.com/" target="_blank">CoinGecko Api</a>
 
 # ScreenShots
 
