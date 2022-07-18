@@ -61,15 +61,19 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
 
     private fun onError(){
         binding.errorTxt.isVisible = true
+        binding.noResultTxt.isVisible = false
         progress.dismiss()
     }
 
     private fun onSuccess(coinItemList: List<CoinItem>){
+        binding.errorTxt.isVisible = false
+        binding.noResultTxt.isVisible = false
         progress.dismiss()
         favoriteCoinsAdapter.submitList(coinItemList)
     }
 
     private fun onEmpty(){
+        binding.errorTxt.isVisible = false
         binding.noResultTxt.isVisible = true
         progress.dismiss()
     }
