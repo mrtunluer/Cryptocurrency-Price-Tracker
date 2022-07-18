@@ -67,7 +67,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
 
     fun getFavorites(): Flow<DataStatus<List<CoinItem>>> = callbackFlow {
         trySend(DataStatus.Loading()).isSuccess
-        val subscription = favoriteCoinsQuery?.addSnapshotListener { snapshots, exception ->
+        val listener = favoriteCoinsQuery?.addSnapshotListener { snapshots, exception ->
             exception?.let {
                 trySend(DataStatus.Error(it.message.toString())).isSuccess
                 cancel()
@@ -79,7 +79,7 @@ class FirebaseRepo @Inject constructor(firebase: Firebase) {
                     trySend(DataStatus.Success(querySnapshot.toObjects(CoinItem::class.java))).isSuccess
             } ?: trySend(DataStatus.Empty()).isSuccess
         }
-        awaitClose { subscription?.remove() }
+        awaitClose { listener?.remove() }
     }
 
 }
