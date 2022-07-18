@@ -75,6 +75,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
     private fun onEmpty(){
         binding.errorTxt.isVisible = false
         binding.noResultTxt.isVisible = true
+        favoriteCoinsAdapter.submitList(emptyList())
         progress.dismiss()
     }
 
