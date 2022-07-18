@@ -53,10 +53,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    collectFavoriteData()
+                    collectDetailsData()
                 }
                 launch {
-                    collectDetailsData()
+                    collectFavoriteData()
                 }
                 launch {
                     collectDataStore()
