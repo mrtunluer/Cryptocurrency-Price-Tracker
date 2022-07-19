@@ -89,10 +89,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         intervalRadioGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
+                R.id.threeSec -> saveDataStore("3")
                 R.id.fiveSec -> saveDataStore("5")
                 R.id.fifteenSec -> saveDataStore("15")
                 R.id.thirtySec -> saveDataStore("30")
-                R.id.fortyFiveSec -> saveDataStore("45")
             }
         }
 
@@ -104,10 +104,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private suspend fun collectDataStore(){
         viewModel.readFromDataStore.collect{ interval ->
             when (interval) {
+                "3" -> intervalRadioGroup.check(R.id.threeSec)
                 "5" -> intervalRadioGroup.check(R.id.fiveSec)
                 "15" -> intervalRadioGroup.check(R.id.fifteenSec)
                 "30" -> intervalRadioGroup.check(R.id.thirtySec)
-                "45" -> intervalRadioGroup.check(R.id.fortyFiveSec)
             }
             delay = convertToMillis(interval)
             autoRefreshDetailsData(delay)

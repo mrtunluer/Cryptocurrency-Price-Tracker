@@ -53,6 +53,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/threeSec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 sec"
+                        android:textSize="14sp"
+                        android:textColor="@color/white" />
+
+                    <RadioButton
                         android:id="@+id/fiveSec"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,16 +80,8 @@
                         android:id="@+id/thirtySec"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="14sp"
                         android:text="30 sec"
-                        android:textSize="14sp"
-                        android:textColor="@color/white" />
-
-                    <RadioButton
-                        android:id="@+id/fortyFiveSec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="45 sec"
                         android:textColor="@color/white" />
 
                 </RadioGroup>

@@ -9,7 +9,7 @@ object Constants {
     const val PREFETCH_DISTANCE = 1
     const val NUM_TABS = 2
     const val SPAN_COUNT = 4
-    const val INITIAL_INTERVAL = "30"
+    const val INITIAL_INTERVAL = "5"
     const val DATA_STORE_NAME = "refresh_interval"
     val TABS_FRAGMENT_TEXT = arrayOf("COINS","FAVORITES")
 
