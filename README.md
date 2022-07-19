@@ -4,8 +4,7 @@ Cryptocurrency price tracking app that I developed with <a href="https://www.coi
 
 # ScreenShots
 
-![Apple iPhone 11 Pro Max Presentation-min](https://user-images.githubusercontent.com/75806927/179395464-7945f948-3721-4944-80fa-5185ca0a2929.png)
-
+![Apple iPhone 11 Pro Max Presentation-min](https://user-images.githubusercontent.com/75806927/179703409-52356811-8223-4df1-978a-1e25d803f50c.png)
 
 ## Libraries Used
 
