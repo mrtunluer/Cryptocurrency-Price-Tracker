@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 private val Context.dataStore by preferencesDataStore(DATA_STORE_NAME)
 
-class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context){
+class DataStoreRepo @Inject constructor(@ApplicationContext private val context: Context){
 
     private object PreferenceKeys{
         val interval = stringPreferencesKey("interval")

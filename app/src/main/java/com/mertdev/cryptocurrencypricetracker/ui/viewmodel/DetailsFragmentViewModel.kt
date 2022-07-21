@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinDetails
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.data.repo.CoinDetailsRepo
-import com.mertdev.cryptocurrencypricetracker.data.repo.DataStoreRepository
+import com.mertdev.cryptocurrencypricetracker.data.repo.DataStoreRepo
 import com.mertdev.cryptocurrencypricetracker.data.repo.FirebaseRepo
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class DetailsFragmentViewModel @Inject constructor(
     private val coinDetailsRepo: CoinDetailsRepo,
     private val firebaseRepo: FirebaseRepo,
-    private val dataStoreRepo: DataStoreRepository,
+    private val dataStoreRepo: DataStoreRepo,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(){
 
