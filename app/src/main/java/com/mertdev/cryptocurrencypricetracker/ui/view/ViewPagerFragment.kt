@@ -13,7 +13,7 @@ import com.mertdev.cryptocurrencypricetracker.adapter.ViewPagerAdapter
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentViewPagerBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.AuthViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.TABS_FRAGMENT_TEXT
-import com.mertdev.cryptocurrencypricetracker.utils.initDialog
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.initDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

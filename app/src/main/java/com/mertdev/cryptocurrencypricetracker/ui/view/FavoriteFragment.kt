@@ -19,7 +19,7 @@ import com.mertdev.cryptocurrencypricetracker.databinding.FragmentFavoriteBindin
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.FavoriteFragmentViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.SPAN_COUNT
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
-import com.mertdev.cryptocurrencypricetracker.utils.initDialog
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.initDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

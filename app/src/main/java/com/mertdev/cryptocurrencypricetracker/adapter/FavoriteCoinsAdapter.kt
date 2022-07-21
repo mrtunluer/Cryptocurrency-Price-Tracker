@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.FavoriteItemBinding
-import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.loadImageFromUrl
 
 class FavoriteCoinsAdapter: RecyclerView.Adapter<FavoriteCoinsAdapter.ViewHolder>() {
 

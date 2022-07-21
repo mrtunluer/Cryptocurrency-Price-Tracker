@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentLoginBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.AuthViewModel
-import com.mertdev.cryptocurrencypricetracker.utils.initDialog
-import com.mertdev.cryptocurrencypricetracker.utils.showToast
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.initDialog
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

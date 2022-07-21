@@ -1,4 +1,4 @@
-package com.mertdev.cryptocurrencypricetracker.utils
+package com.mertdev.cryptocurrencypricetracker.utils.extensions
 
 import android.app.Dialog
 import android.graphics.Color

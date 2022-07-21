@@ -1,4 +1,4 @@
-package com.mertdev.cryptocurrencypricetracker.utils
+package com.mertdev.cryptocurrencypricetracker.utils.extensions
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

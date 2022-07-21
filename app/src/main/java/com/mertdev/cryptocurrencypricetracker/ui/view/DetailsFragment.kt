@@ -22,9 +22,9 @@ import com.mertdev.cryptocurrencypricetracker.databinding.FragmentDetailsBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.DetailsFragmentViewModel
 import com.mertdev.cryptocurrencypricetracker.utils.Constants.INITIAL_INTERVAL
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
-import com.mertdev.cryptocurrencypricetracker.utils.initDialog
-import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
-import com.mertdev.cryptocurrencypricetracker.utils.showToast
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.initDialog
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.loadImageFromUrl
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch

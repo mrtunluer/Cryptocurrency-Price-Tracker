@@ -13,8 +13,8 @@ import com.google.firebase.firestore.FieldValue
 import com.mertdev.cryptocurrencypricetracker.R
 import com.mertdev.cryptocurrencypricetracker.databinding.FragmentRegisterBinding
 import com.mertdev.cryptocurrencypricetracker.ui.viewmodel.AuthViewModel
-import com.mertdev.cryptocurrencypricetracker.utils.initDialog
-import com.mertdev.cryptocurrencypricetracker.utils.showToast
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.initDialog
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

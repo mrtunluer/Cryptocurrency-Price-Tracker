@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mertdev.cryptocurrencypricetracker.data.model.CoinItem
 import com.mertdev.cryptocurrencypricetracker.databinding.CoinsItemBinding
-import com.mertdev.cryptocurrencypricetracker.utils.loadImageFromUrl
+import com.mertdev.cryptocurrencypricetracker.utils.extensions.loadImageFromUrl
 
 class CoinsPagingAdapter: PagingDataAdapter<CoinItem, CoinsPagingAdapter.ViewHolder>(Companion) {
 
