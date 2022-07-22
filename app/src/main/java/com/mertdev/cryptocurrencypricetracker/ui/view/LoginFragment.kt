@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mertdev.cryptocurrencypricetracker.R
@@ -16,13 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    private lateinit var binding: FragmentLoginBinding
+    private val binding: FragmentLoginBinding by viewBinding()
     private val viewModel: AuthViewModel by viewModels()
     private lateinit var progress: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentLoginBinding.bind(view)
         initDialog()
 
         binding.loginCard.setOnClickListener {

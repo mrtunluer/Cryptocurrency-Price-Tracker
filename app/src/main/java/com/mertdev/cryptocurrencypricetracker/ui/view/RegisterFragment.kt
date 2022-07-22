@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -21,13 +22,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
-    private lateinit var binding: FragmentRegisterBinding
+    private val binding: FragmentRegisterBinding by viewBinding()
     private val viewModel: AuthViewModel by viewModels()
     private lateinit var progress: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentRegisterBinding.bind(view)
         initDialog()
 
         viewLifecycleOwner.lifecycleScope.launch {

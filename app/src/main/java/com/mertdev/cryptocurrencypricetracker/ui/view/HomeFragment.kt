@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.viewbinding.library.fragment.viewBinding
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -29,14 +30,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private lateinit var binding: FragmentHomeBinding
+    private val binding: FragmentHomeBinding by viewBinding()
     private val viewModel: HomeFragmentViewModel by viewModels()
     private val coinsPagingAdapter = CoinsPagingAdapter()
     private val searchAdapter = SearchAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
         initRv()
 
         viewLifecycleOwner.lifecycleScope.launch {

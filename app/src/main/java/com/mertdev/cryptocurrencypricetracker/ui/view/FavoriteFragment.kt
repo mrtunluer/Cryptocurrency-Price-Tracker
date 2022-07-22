@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.viewbinding.library.fragment.viewBinding
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -27,14 +28,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
 
-    private lateinit var binding: FragmentFavoriteBinding
+    private val binding: FragmentFavoriteBinding by viewBinding()
     private val viewModel: FavoriteFragmentViewModel by viewModels()
     private val favoriteCoinsAdapter = FavoriteCoinsAdapter()
     private lateinit var progress: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentFavoriteBinding.bind(view)
         init()
 
         viewLifecycleOwner.lifecycleScope.launch {

@@ -8,6 +8,7 @@ import android.os.Looper
 import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.viewbinding.library.fragment.viewBinding
 import android.widget.RadioGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
@@ -32,7 +33,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
-    private lateinit var binding: FragmentDetailsBinding
+    private val binding: FragmentDetailsBinding by viewBinding()
     private val viewModel: DetailsFragmentViewModel by viewModels()
     private var isFavorite: Boolean? = null
     private var coinItem: CoinItem? = null
@@ -46,7 +47,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentDetailsBinding.bind(view)
 
         init()
 
