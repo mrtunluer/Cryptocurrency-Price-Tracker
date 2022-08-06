@@ -10,6 +10,7 @@ import com.mertdev.cryptocurrencypricetracker.data.repo.DataStoreRepo
 import com.mertdev.cryptocurrencypricetracker.data.repo.FirebaseRepo
 import com.mertdev.cryptocurrencypricetracker.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -22,7 +23,7 @@ class DetailsFragmentViewModel @Inject constructor(
     private val firebaseRepo: FirebaseRepo,
     private val dataStoreRepo: DataStoreRepo,
     savedStateHandle: SavedStateHandle
-) : ViewModel(){
+) : ViewModel() {
 
     private val _detailState = MutableStateFlow<DataStatus<CoinDetails>>(DataStatus.Loading())
     val detailState: StateFlow<DataStatus<CoinDetails>> get() = _detailState
@@ -40,35 +41,39 @@ class DetailsFragmentViewModel @Inject constructor(
     }
 
     fun saveToDataStore(interval: String) =
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepo.saveToDataStore(interval)
         }
 
-    fun getCoinDetails(){
-        viewModelScope.launch {
-            if (coinId != null){
+    fun getCoinDetails() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (coinId != null) {
                 coinDetailsRepo.getCoinDetails(coinId)
                     .catch { exception ->
-                        _detailState.value =  DataStatus.Error(exception.message.toString())
-                    }.collect{ data ->
+                        _detailState.value = DataStatus.Error(exception.message.toString())
+                    }.collect { data ->
                         _detailState.value = DataStatus.Success(data)
                     }
-            }else{ _detailState.value = DataStatus.Empty() }
+            } else {
+                _detailState.value = DataStatus.Empty()
+            }
         }
     }
 
     fun isFavorite() {
-        if (coinId != null){
+        if (coinId != null) {
             firebaseRepo.isFavorite(coinId)?.addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
                     _favoriteState.value = DataStatus.Success(true)
-                }else{
+                } else {
                     _favoriteState.value = DataStatus.Empty()
                 }
             }?.addOnFailureListener { exception ->
                 _favoriteState.value = DataStatus.Error(exception.message)
             }
-        }else{ _favoriteState.value = DataStatus.Empty() }
+        } else {
+            _favoriteState.value = DataStatus.Empty()
+        }
     }
 
     fun addFavorite(coinItem: CoinItem) =

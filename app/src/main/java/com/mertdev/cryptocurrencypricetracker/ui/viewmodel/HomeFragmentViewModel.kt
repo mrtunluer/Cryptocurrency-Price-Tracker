@@ -6,6 +6,7 @@ import androidx.paging.cachedIn
 import com.mertdev.cryptocurrencypricetracker.data.repo.CoinRepo
 import com.mertdev.cryptocurrencypricetracker.utils.CoinListState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
     private val coinRepo: CoinRepo
-) : ViewModel(){
+) : ViewModel() {
 
     private val _state = MutableStateFlow(CoinListState())
     val state: StateFlow<CoinListState> get() = _state
@@ -23,7 +24,7 @@ class HomeFragmentViewModel @Inject constructor(
     }
 
     fun getCoins() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             coinRepo.getCoins().cachedIn(viewModelScope).collectLatest {
                 _state.value = CoinListState(it)
             }
